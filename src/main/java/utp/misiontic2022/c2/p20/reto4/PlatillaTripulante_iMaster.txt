@@ -1,0 +1,309 @@
+/*
+ * Puede usar esta plantilla para la carga del reto a iMaster
+ * Copie las clases de los paquetes Modelo, Vista, Controlador y Util
+ * No incluya los import de los archivos .java solo las clases
+ */
+// Importaciones necesarias en iMaster
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+// Util (No modificar)
+class JDBCUtilities {
+    private static final String DATABASE_LOCATION = "ProyectosConstruccion.db";
+
+    public static Connection getConnection() throws SQLException {
+        String url = "jdbc:sqlite:"+DATABASE_LOCATION;
+
+        return DriverManager.getConnection(url);
+    }
+}
+
+// Remplace en adelante por las clases de sus archivos .java
+
+// Vista
+
+public class VistaRequerimientosReto4 {
+
+    public static final ControladorRequerimientos controlador = new ControladorRequerimientos();
+
+    public static void requerimiento1() {
+        // System.out.println("Conocer el nombre, apellidos y salarios de los lideres
+        // cuyo segundo apellido sea ‘Ortiz’");
+        try {
+            // Mi código
+            // Conocer el nombre, apellidos y salarios de los lideres cuyo segundo apellido
+            // sea ‘Ortiz’
+            ArrayList<Requerimiento_1> punto_1 = controlador.consultarRequerimiento1();
+            System.out.println("Conocer el nombre, apellidos y salarios de los lideres cuyo segundo apellido sea 'Ortiz'");
+            System.out.println("Nombre Primer_Apellido Segundo_Apellido Salario");
+            for (Requerimiento_1 q1 : punto_1) {
+                System.out.printf("%s %s %s %6.1f %n", q1.getNombre(), q1.getPrimer_Apellido(), q1.getSegundo_Apellido(),
+                        (double)q1.getSalario());
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+    public static void requerimiento2() {
+        try {
+            // Mi código
+            // Transformaryobtenerelnombredeloslideres dondela
+            // primeraletraseaenminúsculaylasdemás
+            // en mayúscula
+            ArrayList<Requerimiento_2> punto_2 = controlador.consultarRequerimiento2();
+            System.out.println("Transformar y obtener el nombre de los lideres donde la primera letra sea en minúscula y las demás en mayúscula");
+            System.out.println("Nombre");
+            for (Requerimiento_2 q2 : punto_2) {
+                System.out.printf("%s %n", q2.getName());
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+    public static void requerimiento3() {
+        try {
+            // Mi código
+            // Saber la suma de los salarios de todos los lideres por su ciudad de
+            // residencia
+
+            ArrayList<Requerimiento_3> punto_3 = controlador.consultarRequerimiento3();
+            System.out.println("Saber la suma de los salarios de todos los lideres por su ciudad de residencia");
+            System.out.println("Cargo Salario");
+            for (Requerimiento_3 q3 : punto_3) {
+                System.out.printf("%s %f %n", q3.getCargo(), q3.getSalario());
+            }
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+    }
+
+}
+
+// Controlador
+
+public class ControladorRequerimientos {
+    // Mi código
+
+    private final Requerimiento_1Dao requerimiento_1Dao;
+    private final Requerimiento_2Dao requerimiento_2Dao;
+    private final Requerimiento_3Dao requerimiento_3Dao;
+    
+    public  ControladorRequerimientos(){
+
+    this.requerimiento_1Dao = new Requerimiento_1Dao();
+    this.requerimiento_2Dao = new Requerimiento_2Dao();
+    this.requerimiento_3Dao = new Requerimiento_3Dao();
+    
+    }
+
+    public ArrayList<Requerimiento_1> consultarRequerimiento1() throws SQLException {
+        // Mi código
+        return requerimiento_1Dao.requerimiento1();
+    }
+
+    public ArrayList<Requerimiento_2> consultarRequerimiento2() throws SQLException {
+        // Su código
+        return requerimiento_2Dao.requerimiento2();
+    }
+
+    public ArrayList<Requerimiento_3> consultarRequerimiento3() throws SQLException {
+        // Su código
+        return requerimiento_3Dao.requerimiento3();
+    }
+}
+
+// Modelo
+// VO
+public class Requerimiento_1 {
+    // Mi código
+    //Nombre, Primer_Apellido ,Segundo_Apellido ,Salario
+    private String Nombre;
+    private String Primer_Apellido;
+    private String Segundo_Apellido;
+    private Integer Salario;
+
+    public Requerimiento_1(){
+    }
+    public Requerimiento_1(String nombre,String primer_Apellido,
+    String segundo_Apellido,Integer salario ){  
+        this.Nombre=nombre;
+        this.Primer_Apellido=primer_Apellido;
+        this.Segundo_Apellido=segundo_Apellido;
+        this.Salario=salario;
+    }
+
+    public String getNombre() {
+        return Nombre;
+    }
+    public void setNombre(String nombre) {
+        Nombre = nombre;
+    }
+    public String getPrimer_Apellido() {
+        return Primer_Apellido;
+    }
+    public void setPrimer_Apellido(String primer_Apellido) {
+        Primer_Apellido = primer_Apellido;
+    }
+    public String getSegundo_Apellido() {
+        return Segundo_Apellido;
+    }
+    public void setSegundo_Apellido(String segundo_Apellido) {
+        Segundo_Apellido = segundo_Apellido;
+    }
+    public Integer getSalario() {
+        return Salario;
+    }
+    public void setSalario(Integer salario) {
+        Salario = salario;
+    }
+     
+}  
+
+public class Requerimiento_2 {
+    // Su código
+    private String Name;
+
+    public Requerimiento_2(){
+    }
+    public Requerimiento_2(String nombre){  
+        this.Name=nombre;
+    }
+
+    public String getName() {
+        return Name;
+    }
+    public void setName(String name) {
+        Name = name;
+    }
+}
+
+public class Requerimiento_3 {
+    // Su código
+    private String Cargo;
+    private Double Salario;
+
+    public String getCargo() {
+        return Cargo;
+    }
+    public void setCargo(String cargo) {
+        Cargo = cargo;
+    }
+    public Double getSalario() {
+        return Salario;
+    }
+    public void setSalario(Double salario) {
+        Salario = salario;
+    }    
+}
+
+// DAO
+public class Requerimiento_1Dao {
+    public ArrayList<Requerimiento_1> requerimiento1() throws SQLException {
+        // Mi código
+        /*
+         * select Nombre, Primer_Apellido ,Segundo_Apellido ,Salario from Lider where
+         * Segundo_Apellido ="Ortiz”;
+         */
+        ArrayList<Requerimiento_1> salida = new ArrayList<Requerimiento_1>();
+        Connection conexion = JDBCUtilities.getConnection();
+        try {
+            String comando = "select Nombre, Primer_Apellido, Segundo_Apellido, "
+                    + "Salario from Lider where Segundo_Apellido ='Ortiz'";
+            Statement stm = conexion.createStatement();
+            ResultSet resultado = stm.executeQuery(comando);
+            while (resultado.next()) {
+                Requerimiento_1 req_1 = new Requerimiento_1();
+                req_1.setNombre(resultado.getString("Nombre"));
+                req_1.setPrimer_Apellido(resultado.getString("Primer_Apellido"));
+                req_1.setSegundo_Apellido(resultado.getString("Segundo_Apellido"));
+                req_1.setSalario(resultado.getInt("Salario"));
+
+                salida.add(req_1);
+            }
+            resultado.close();
+            stm.close();
+
+        } catch (SQLException e) {
+            // si falla algo:
+            System.err.println("Error en la Consulta 1" + e);
+        } finally {
+            if (conexion != null) {
+                conexion.close();
+            }
+        }
+        return salida;
+    }
+}
+
+public class Requerimiento_2Dao {
+    public ArrayList<Requerimiento_2> requerimiento2() throws SQLException {
+        // Mi código
+
+        ArrayList<Requerimiento_2> salida = new ArrayList<Requerimiento_2>();
+        Connection conexion = JDBCUtilities.getConnection();
+        try {
+            String comando = "SELECT LOWER(SUBSTR(Nombre,1,1)) || " + 
+            "UPPER(SUBSTR(Nombre,2,LENGTH(Nombre)) ) as Name "
+                    + " from Lider";
+            Statement stm = conexion.createStatement();
+            ResultSet resultado = stm.executeQuery(comando);
+            while (resultado.next()) {
+                Requerimiento_2 req_2 = new Requerimiento_2();
+                req_2.setName(resultado.getString("Name"));
+                salida.add(req_2);
+            }
+            resultado.close();
+            stm.close();
+
+        } catch (SQLException e) {
+            // si falla algo:
+            System.err.println("Error en la Consulta 2" + e);
+        } finally {
+            if (conexion != null) {
+                conexion.close();
+            }
+        }
+        return salida;
+    }
+}
+
+public class Requerimiento_3Dao {
+    public ArrayList<Requerimiento_3> requerimiento3() throws SQLException {
+        // Su código
+
+        ArrayList<Requerimiento_3> salida = new ArrayList<Requerimiento_3>();
+        Connection conexion = JDBCUtilities.getConnection();
+        try {
+            String comando = "select  Cargo, avg(Salario) as Salario"        
+               + " from Lider  group by Cargo having avg(salario)>500000 order by Cargo";
+
+            Statement stm = conexion.createStatement();
+            ResultSet resultado = stm.executeQuery(comando);
+            while (resultado.next()) {
+                Requerimiento_3 req_3 = new Requerimiento_3();
+                req_3.setCargo(resultado.getString("Cargo"));
+                req_3.setSalario(resultado.getDouble("Salario"));
+
+                salida.add(req_3);
+            }
+            resultado.close();
+            stm.close();
+
+        } catch (SQLException e) {
+            // si falla algo:
+            System.err.println("Error en la Consulta 3" + e);
+        } finally {
+            if (conexion != null) {
+                conexion.close();
+            }
+        }
+        return salida;
+
+    }
+}
